@@ -1,0 +1,42 @@
+@echo off
+title Remover v¡rus de PenDrive
+echo Digite a letra da unidade do PenDrive:
+set /p und=
+%und%:
+if exist autorun.inf (goto del) else (goto mkdir)
+:del
+ATTRIB -s -r -h autorun.inf
+DEL /f /q autorun.inf
+ATTRIB -s -r -h *.cmd
+ATTRIB -s -r -h *.pif
+DEL /f /q *.cmd
+DEL /f /q *.pif
+goto mkdir
+:mkdir
+MKDIR autorun.inf
+ATTRIB +h +s +r autorun.inf
+CD autorun.inf
+MKDIR .\CON\
+CD\
+if exist empty (goto delempty) else (goto ignore)
+:ignore
+CD\
+goto fim
+:delempty
+ATTRIB -s -r -h empty
+CD empty
+ATTRIB -s -r -h /s /d
+DEL. /f /q
+CD..
+RD empty
+:fim
+cls
+echo.
+color 2
+echo ================================================
+echo = Seu pendrive esta imunizado contra v¡rus. =
+echo ================================================
+echo.
+pause>nul
+exit
+cls
